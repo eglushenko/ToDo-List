@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>TODO app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+         <div class="col-6">
+                <h2 class="my-5">ToDo</h2>
+                     <div th:if="${#lists.isEmpty(tasks)}" class="information">
+                         <div class="alert alert-primary" role="alert">
+                             Tasks not found!
+                         </div>
+                     </div>
+
+             <p class="my-5"><a href="/signup" class="btn btn-primary"><i class="fas fa-user-plus ml-2"></i> Add Task</a></p>
+             <!-- FILTER -->
+             <div class="container">
+                 <a class="nav-link" th:href="@{/{status}(status='all')}">
+                     <i class="fas fa-fw fa-chart-area"></i>
+                     <span>ALL TASKS</span></a>
+                 <a class="nav-link" th:href="@{/{status}(status='new')}">
+                     <i class="fas fa-fw fa-chart-area"></i>
+                     <span>OPEN TASKS</span></a>
+                 <a class="nav-link" th:href="@{/{status}(status='close')}">
+                     <i class="fa fa-window-close"></i>
+                     <span>CLOSE TASKS</span></a>
+             </div>i
+             <!-- TABLE -->
+             <div class="container">
+                <table class="table table-hover ">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Options</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="task : ${tasks}">
+                        <td th:text="${task.id}"></td>
+                        <td><a th:href="@{/edit/{id}(id=${task.id})}" th:text="${task.getName()}"/></a></td>
+                        <td th:text="${task.status}"></td>
+                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" th:attrappend="data-target=${task.id}">
+                            Delete
+                        </button>
+                            <!-- Modal -->
+                            <div th:attrappend="id=${task.id}" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>You sure delete task?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+                                            <a th:href="@{/delete/{id}(id=${task.id})}" class="btn btn-primary"><i class="fas fa-trash ml-2"></i> Yes </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+             </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
