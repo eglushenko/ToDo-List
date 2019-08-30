@@ -25,9 +25,9 @@
                                 class="text-danger"></span>
                         </div>
                         <div class="form-group col-md-8">
-                            <label for="info" class="col-form-label">Info</label> <input
+                            <label for="info" class="col-form-label">Info</label> <textarea
                                 type="text" th:field="*{info}" class="form-control" id="info"
-                                placeholder="Info"> <span
+                                placeholder="Info" rows="3"/> <span
                                 th:if="${#fields.hasErrors('info')}" th:errors="*{info}"
                                 class="text-danger"></span>
                         </div>
